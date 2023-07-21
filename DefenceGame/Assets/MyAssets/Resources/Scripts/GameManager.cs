@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
+
 {
     public static GameManager instance;
     public GameObject[] enemies;
@@ -17,15 +18,5 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("게임 매니져가 너무 많습니다");
         }
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
     }
 }
