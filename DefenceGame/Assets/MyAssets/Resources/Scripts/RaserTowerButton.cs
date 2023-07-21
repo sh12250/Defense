@@ -5,13 +5,8 @@ using UnityEngine;
 
 public class RaserTowerButton : MonoBehaviour
 {
-    void Start()
+    public void CreateRaserTower()
     {
-        
-    }
 
-    void Update()
-    {
-        
     }
 }
