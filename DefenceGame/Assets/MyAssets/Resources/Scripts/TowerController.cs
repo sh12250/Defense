@@ -14,7 +14,7 @@ public class TowerController : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < enemies.Count;)
         {
             distance = transform.position - enemies[i].transform.position;
 
@@ -28,11 +28,21 @@ public class TowerController : MonoBehaviour
 
 
                 // 적이 있는 방향
-                Vector2 direction = enemies[i].transform.position - transform.position;
+                Vector2 direction = enemies[i].transform.localPosition - transform.position;
                 // 앞이 양의 Y축 방향이므로 up
                 transform.up = direction.normalized * -1;
 
+                Bullet bullet = BulletPool.GetObject();
+                bullet.transform.position = new Vector2(transform.position.x, transform.position.y) + direction.normalized;
+                bullet.Shoot(direction.normalized);
+
                 Debug.Log("공격!");
+
+                break;
+            }
+            else
+            {
+                i += 1;
             }
         }
     }
