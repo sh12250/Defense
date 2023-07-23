@@ -5,7 +5,7 @@ using UnityEngine.Pool;
 
 public class Bullet : MonoBehaviour
 {
-    private Vector2 direction;
+    private Vector3 direction;
 
     void Update()
     {
@@ -15,8 +15,8 @@ public class Bullet : MonoBehaviour
     public void Shoot(Vector3 direction)
     {
         this.direction = direction;
-        transform.up = direction;
-        Invoke("DestroyBullet", 5f);
+        //transform.up = direction;
+        Invoke("DestroyBullet", 0.5f);
     }
 
     public void DestroyBullet()
