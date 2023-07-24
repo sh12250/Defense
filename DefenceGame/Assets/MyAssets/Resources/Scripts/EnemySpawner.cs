@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public Vector3[] spawnPositions = default;
 
     public float time = default;
-    public float spawnRate = 1.5f;
+    public float spawnRate = 0.5f;
     public int spawnCount = 0;
 
     void Start()

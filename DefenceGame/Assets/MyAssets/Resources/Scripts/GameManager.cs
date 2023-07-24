@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public GameObject[] attackLine1 = default;
     public GameObject[] attackLine2 = default;
 
+    public int gold = default;
+
     private void Awake()
     {
         if (instance == null || instance == default)
@@ -21,6 +23,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("게임 매니져가 너무 많습니다");
         }
+
+        gold = 0;
     }
 
     public void AddEnemyInEnemies(GameObject enemy_)

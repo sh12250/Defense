@@ -63,6 +63,8 @@ public class EnemyController : MonoBehaviour
 
     public void DestroyEnemy()
     {
+        GameManager.instance.enemies.Remove(gameObject);
+        GameManager.instance.gold += level;
         Destroy(gameObject);
     }
 }
