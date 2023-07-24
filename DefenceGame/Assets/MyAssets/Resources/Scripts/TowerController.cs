@@ -33,6 +33,7 @@ public class TowerController : MonoBehaviour
                 //transform.up = direction.normalized * -1;
 
                 Bullet bullet = BulletPool.GetObject();
+                bullet.SetDamage(GetDamage());
                 bullet.transform.position = gameObject.transform.localPosition;
                 bullet.Shoot(direction.normalized);
 
@@ -45,5 +46,11 @@ public class TowerController : MonoBehaviour
                 i += 1;
             }
         }
+    }
+
+    private float GetDamage()
+    {
+        LaserTower1 laserTower1 = gameObject.GetComponent<LaserTower1>();
+        return laserTower1.damage;
     }
 }
