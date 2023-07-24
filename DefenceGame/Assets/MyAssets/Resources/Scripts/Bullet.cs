@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(direction);
+        transform.Translate(0f, 0.1f, 0f);
     }
 
     public void SetDamage(float damage_)
@@ -17,16 +17,28 @@ public class Bullet : MonoBehaviour
         damage = damage_;
     }
 
-    public void Shoot(Vector3 direction)
+    public void Shoot(Vector3 direction_)
     {
-        this.direction = direction;
-        //transform.up = direction;
-        Invoke("DestroyBullet", 0.5f);
+        this.direction = direction_;
+        transform.up = direction_.normalized;
+        Invoke("DestroyBullet", 5f);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Enemy"))
+        {
+            EnemyController eCon = collision.gameObject.GetComponent<EnemyController>();
+            // TODO NullException 해결해야함
+            eCon.health -= damage;
+            DestroyBullet();
+            Debug.Log("부딪히나?");
+        }
     }
 
     public void DestroyBullet()
     {
+        // transform.SetParent(null);
         BulletPool.ReturnObject(this);
     }
-
 }

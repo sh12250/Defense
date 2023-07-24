@@ -7,16 +7,30 @@ public class TowerController : MonoBehaviour
     public Vector2 distance = Vector2.zero;
     private List<GameObject> enemies;
 
+    private float time;
+    private float shootRate;
+
     void Start()
     {
         enemies = GameManager.instance.enemies;
+        LaserTower laserTower = gameObject.GetComponent<LaserTower>();
+        shootRate = laserTower.ShootRate;
+        time = 0f;
     }
 
     void Update()
     {
+        time += Time.deltaTime;
+
         for (int i = 0; i < enemies.Count;)
         {
             distance = transform.position - enemies[i].transform.position;
+
+            // 적이 있는 방향
+            Vector3 direction = enemies[i].transform.position - transform.position;
+            // 앞이 양의 Y축 방향이므로 up
+            transform.up = direction.normalized * -1f;
+
 
             if (distance.magnitude <= 3.0f)
             {
@@ -26,18 +40,13 @@ public class TowerController : MonoBehaviour
                 // Quaternion.AngleAxis(float 도, Vector3 방향벡터): 방향벡터를 축으로 삼아 도만큼 돌린 방향을 Quaternion으로 반환하는 함수
                 // transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
 
+                if (time >= shootRate)
+                {
+                    time = 0;
 
-                // 적이 있는 방향
-                Vector3 direction = enemies[i].transform.position - transform.position;
-                // 앞이 양의 Y축 방향이므로 up
-                //transform.up = direction.normalized * -1;
-
-                Bullet bullet = BulletPool.GetObject();
-                bullet.SetDamage(GetDamage());
-                bullet.transform.position = gameObject.transform.localPosition;
-                bullet.Shoot(direction.normalized);
-
-                Debug.Log("공격!");
+                    ShootBullet(direction);
+                    Debug.LogFormat("공격! , Time : {0}", time);
+                }
 
                 break;
             }
@@ -48,9 +57,18 @@ public class TowerController : MonoBehaviour
         }
     }
 
+    private void ShootBullet(Vector3 direct_)
+    {
+        Bullet bullet = BulletPool.GetObject();
+        bullet.SetDamage(GetDamage());
+        // bullet.transform.SetParent(transform);
+        bullet.transform.position = transform.position + direct_.normalized / 10;
+        bullet.Shoot(direct_.normalized);
+    }
+
     private float GetDamage()
     {
-        LaserTower1 laserTower1 = gameObject.GetComponent<LaserTower1>();
-        return laserTower1.damage;
+        LaserTower laserTower = gameObject.GetComponent<LaserTower>();
+        return laserTower.Damage;
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - Road
   - TowerBase
   - Nexus
+  - Enemy
   layers:
   - Default
   - TransparentFX

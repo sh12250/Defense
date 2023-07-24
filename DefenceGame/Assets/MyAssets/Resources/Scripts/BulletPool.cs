@@ -16,7 +16,7 @@ public class BulletPool : MonoBehaviour
     {
         Instance = this;
 
-        Initialize(10);
+        Initialize(100);
     }
 
     private void Initialize(int initCount)

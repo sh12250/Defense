@@ -11,6 +11,7 @@ public class EnemySpawner : MonoBehaviour
 
     public float time = default;
     public float spawnRate = 1.5f;
+    public int spawnCount = 0;
 
     void Start()
     {
@@ -54,12 +55,29 @@ public class EnemySpawner : MonoBehaviour
         if (time >= spawnRate)
         {
             time = 0;
+            spawnCount += 1;
 
             int randIdx = Random.Range(0, 25);
 
             GameObject enemy = Instantiate(enemyPrefab, spawnPositions[randIdx], Quaternion.identity, map.transform);
 
+            SetEnemyStatus(enemy);
             GameManager.instance.AddEnemyInEnemies(enemy);
         }
+
+        if(spawnCount == 10)
+        {
+            spawnCount = 0;
+
+            EnemyStatus.instance.LevelUp();
+        }
+    }
+
+    private void SetEnemyStatus(GameObject enemy_)
+    {
+        EnemyController eCon = enemy_.GetComponent<EnemyController>();
+        eCon.level = EnemyStatus.instance.Level;
+        eCon.healthMax = EnemyStatus.instance.HealthMax;
+        eCon.health = eCon.healthMax;
     }
 }

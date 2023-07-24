@@ -8,6 +8,9 @@ public class EnemyController : MonoBehaviour
 
     public int randNum = 0;
 
+    public int level;
+    public float healthMax;
+    public float health;
     public float speed = 1.0f;
 
     public int targetIdx = 0;
@@ -32,7 +35,7 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if(targetIdx != 11)
+        if (targetIdx != 11)
         {
             // if (gameObject.transform.position != targetPos)
             if (transform.position.x > targetPos.x + 0.1f || transform.position.x < targetPos.x - 0.1f ||
@@ -51,5 +54,15 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
+
+        if (health <= 0)
+        {
+            DestroyEnemy();
+        }
+    }
+
+    public void DestroyEnemy()
+    {
+        Destroy(gameObject);
     }
 }
