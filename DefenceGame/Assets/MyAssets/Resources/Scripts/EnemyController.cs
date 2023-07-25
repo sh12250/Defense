@@ -61,10 +61,28 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Nexus"))
+        {
+            GameManager.instance.SetLife();
+            GameManager.instance.enemies.Remove(gameObject);
+            Destroy(gameObject);
+        }
+    }
+
     public void DestroyEnemy()
     {
+        GameObject myInfo;
+
+        EnemySpawner eSpawn = FindObjectOfType<EnemySpawner>();
+        eSpawn.enemyInfoDic.TryGetValue(gameObject, out myInfo);
+        eSpawn.enemyInfoDic.Remove(gameObject);
+        Destroy(myInfo);
+
         GameManager.instance.enemies.Remove(gameObject);
-        GameManager.instance.gold += level;
+        GameManager.instance.AddScore((int)healthMax);
+        GameManager.instance.AddGold(level);
         Destroy(gameObject);
     }
 }

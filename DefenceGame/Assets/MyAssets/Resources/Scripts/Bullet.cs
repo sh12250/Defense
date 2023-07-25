@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         transform.Translate(0f, 0.1f, 0f);
+
         Vector2 distance = gameObject.transform.position - tower.transform.position;
         if (distance.magnitude >= 3.0f && gameObject.activeInHierarchy)
         {

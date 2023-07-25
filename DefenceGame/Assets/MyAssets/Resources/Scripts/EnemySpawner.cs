@@ -9,12 +9,17 @@ public class EnemySpawner : MonoBehaviour
     public GameObject[] enemies = default;
     public Vector3[] spawnPositions = default;
 
+    public GameObject enemyInfoUi = default;
+    public GameObject targetCanvas = default;
+    public Dictionary<GameObject, GameObject> enemyInfoDic = default;
+
     public float time = default;
     public float spawnRate = 0.5f;
     public int spawnCount = 0;
 
     void Start()
     {
+        enemyInfoDic = new Dictionary<GameObject, GameObject>();
         SetSpawnPositions();
     }
 
@@ -60,6 +65,11 @@ public class EnemySpawner : MonoBehaviour
             int randIdx = Random.Range(0, 25);
 
             GameObject enemy = Instantiate(enemyPrefab, spawnPositions[randIdx], Quaternion.identity, map.transform);
+            GameObject enemyInfo = Instantiate(enemyInfoUi, enemy.transform.position, Quaternion.identity, targetCanvas.transform);
+            enemyInfo.GetComponent<FollowEnemy>().target = enemy;
+            enemyInfo.GetComponent<EnemyInfoUi>().target = enemy;
+
+            enemyInfoDic.Add(enemy, enemyInfo);
 
             SetEnemyStatus(enemy);
             GameManager.instance.AddEnemyInEnemies(enemy);
@@ -70,6 +80,7 @@ public class EnemySpawner : MonoBehaviour
             spawnCount = 0;
 
             EnemyStatus.instance.LevelUp();
+            GameManager.instance.AddLevel(EnemyStatus.instance.Level);
         }
     }
 

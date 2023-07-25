@@ -6,19 +6,24 @@ using UnityEngine.UI;
 public class EnemyInfoUi : MonoBehaviour
 {
     public Image healthBar;
+    public GameObject target;
     private EnemyController eCon;
     private float temp;
 
     private void Start()
     {
-        eCon = gameObject.GetComponentInParent<EnemyController>();
-        temp = eCon.health;
-        SetHealthBar();
     }
 
     private void Update()
     {
-        if (temp != eCon.health)
+        if(eCon == null && target != null)
+        {
+            eCon = target.GetComponent<EnemyController>();
+            temp = eCon.health;
+            SetHealthBar();
+        }
+
+        if (eCon != null && temp != eCon.health)
         {
             temp = eCon.health;
             SetHealthBar();

@@ -29,7 +29,6 @@ public class TowerController : MonoBehaviour
             // 적이 있는 방향
             Vector3 direction = enemies[i].transform.position - transform.position;
 
-
             if (distance.magnitude <= 3.0f)
             {
                 // Mathf.Atan2(float y좌표값, float x좌표값): y와 x를 받아와 탄젠트의 역함수(아크 탄젠트)를 구해 radian(라디안)으로 반환하는 함수 
@@ -39,7 +38,17 @@ public class TowerController : MonoBehaviour
                 // transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
 
                 // 앞이 양의 Y축 방향이므로 up
-                transform.up = direction.normalized * -1f;
+                // transform.up = direction.normalized * -1f;
+                if(direction.x < 0f)
+                {
+                    SpriteRenderer sRenderer = GetComponentInChildren<SpriteRenderer>();
+                    sRenderer.flipX = true;
+                }
+                else if(direction.x >= 0f)
+                {
+                    SpriteRenderer sRenderer = GetComponentInChildren<SpriteRenderer>();
+                    sRenderer.flipX = false;
+                }
 
                 if (time >= shootRate)
                 {
