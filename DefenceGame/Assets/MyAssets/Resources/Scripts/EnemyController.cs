@@ -65,8 +65,15 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Nexus"))
         {
-            GameManager.instance.SetLife();
+
+            GameObject myInfo;
+            EnemySpawner eSpawn = FindObjectOfType<EnemySpawner>();
+            eSpawn.enemyInfoDic.TryGetValue(gameObject, out myInfo);
+            eSpawn.enemyInfoDic.Remove(gameObject);
+            Destroy(myInfo);
+
             GameManager.instance.enemies.Remove(gameObject);
+            GameManager.instance.SetLife();
             Destroy(gameObject);
         }
     }
@@ -74,7 +81,6 @@ public class EnemyController : MonoBehaviour
     public void DestroyEnemy()
     {
         GameObject myInfo;
-
         EnemySpawner eSpawn = FindObjectOfType<EnemySpawner>();
         eSpawn.enemyInfoDic.TryGetValue(gameObject, out myInfo);
         eSpawn.enemyInfoDic.Remove(gameObject);

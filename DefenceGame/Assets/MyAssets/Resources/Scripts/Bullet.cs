@@ -6,14 +6,14 @@ public class Bullet : MonoBehaviour
 {
     public GameObject tower;
     private float damage;
-    private Vector3 direction;
+    public float range;
 
     void Update()
     {
-        transform.Translate(0f, 0.1f, 0f);
+        transform.Translate(0f, 0.05f, 0f);
 
         Vector2 distance = gameObject.transform.position - tower.transform.position;
-        if (distance.magnitude >= 3.0f && gameObject.activeInHierarchy)
+        if (distance.magnitude >= range && gameObject.activeInHierarchy)
         {
             DestroyBullet();
         }
@@ -26,7 +26,6 @@ public class Bullet : MonoBehaviour
 
     public void Shoot(Vector3 direction_)
     {
-        this.direction = direction_;
         transform.up = direction_.normalized;
     }
 

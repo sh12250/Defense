@@ -7,20 +7,14 @@ public class TowerButton : MonoBehaviour
     public GameObject towerSpritePrefab;
     public bool isSpriteExist;
 
-    private int price;
-
     private void Start()
     {
         isSpriteExist = false;
-        price = 50;
     }
 
     private void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit raycastHit;
 
-        Physics.Raycast(ray, out raycastHit);
     }
 
     public void CreateLaserTower()
@@ -30,9 +24,14 @@ public class TowerButton : MonoBehaviour
             return;
         }
 
-        isSpriteExist = true;
-        GameObject towerSprite;
-        towerSprite = Instantiate(towerSpritePrefab, Input.mousePosition, Quaternion.identity);
+        if (GameManager.instance.gold + FindObjectOfType<TowerSpawner>().laserPrice >= 0)
+        {
+            isSpriteExist = true;
+            GameObject towerSprite;
+            towerSprite = Instantiate(towerSpritePrefab, Input.mousePosition, Quaternion.identity);
+            TowerSpawner tSpawner = FindAnyObjectByType<TowerSpawner>();
+            tSpawner.followMouseObj = towerSprite;
+        }
     }
 
     public void CreateRicochetTower()
@@ -42,8 +41,13 @@ public class TowerButton : MonoBehaviour
             return;
         }
 
-        isSpriteExist = true;
-        GameObject towerSprite;
-        towerSprite = Instantiate(towerSpritePrefab, Input.mousePosition, Quaternion.identity);
+        if (GameManager.instance.gold + FindObjectOfType<TowerSpawner>().ricochetPrice >= 0)
+        {
+            isSpriteExist = true;
+            GameObject towerSprite;
+            towerSprite = Instantiate(towerSpritePrefab, Input.mousePosition, Quaternion.identity);
+            TowerSpawner tSpawner = FindAnyObjectByType<TowerSpawner>();
+            tSpawner.followMouseObj = towerSprite;
+        }
     }
 }

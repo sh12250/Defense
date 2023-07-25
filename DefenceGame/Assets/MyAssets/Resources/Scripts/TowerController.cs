@@ -7,14 +7,12 @@ public class TowerController : MonoBehaviour
     public Vector2 distance = Vector2.zero;
     private List<GameObject> enemies;
 
+    public float shootRate;
     private float time;
-    private float shootRate;
 
     void Start()
     {
         enemies = GameManager.instance.enemies;
-        LaserTower laserTower = gameObject.GetComponent<LaserTower>();
-        shootRate = laserTower.ShootRate;
         time = 0f;
     }
 
@@ -54,7 +52,8 @@ public class TowerController : MonoBehaviour
                 {
                     time = 0;
 
-                    ShootBullet(direction);
+                    LaserTower laserTower = gameObject.GetComponent<LaserTower>();
+                    laserTower.ShootBullet(direction);
                     Debug.LogFormat("АјАн! , Time : {0}", time);
                 }
 
@@ -65,20 +64,5 @@ public class TowerController : MonoBehaviour
                 i += 1;
             }
         }
-    }
-
-    private void ShootBullet(Vector3 direct_)
-    {
-        Bullet bullet = BulletPool.GetObject();
-        bullet.tower = gameObject;
-        bullet.SetDamage(GetDamage());
-        bullet.transform.position = transform.position + direct_.normalized / 10;
-        bullet.Shoot(direct_.normalized);
-    }
-
-    private float GetDamage()
-    {
-        LaserTower laserTower = gameObject.GetComponent<LaserTower>();
-        return laserTower.Damage;
     }
 }

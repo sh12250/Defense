@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class LaserTower : MonoBehaviour
+public class RicochetTower : MonoBehaviour
 {
     public Vector2 distance = Vector2.zero;
     private List<GameObject> enemies;
@@ -16,9 +16,9 @@ public class LaserTower : MonoBehaviour
 
     private void Start()
     {
-        Damage = 1.0f;
-        ShootRate = 0.01f;
-        Range = 1.5f;
+        Damage = 5.0f;
+        ShootRate = 0.5f;
+        Range = 3.0f;
         enemies = GameManager.instance.enemies;
         time = 0f;
     }
@@ -46,12 +46,12 @@ public class LaserTower : MonoBehaviour
                 if (direction.x < 0f)
                 {
                     SpriteRenderer sRenderer = GetComponentInChildren<SpriteRenderer>();
-                    sRenderer.flipX = true;
+                    sRenderer.flipX = false;
                 }
                 else if (direction.x >= 0f)
                 {
                     SpriteRenderer sRenderer = GetComponentInChildren<SpriteRenderer>();
-                    sRenderer.flipX = false;
+                    sRenderer.flipX = true;
                 }
 
                 if (time >= ShootRate)

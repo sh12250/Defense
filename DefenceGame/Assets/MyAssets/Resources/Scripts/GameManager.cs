@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] attackLine1 = default;
     public GameObject[] attackLine2 = default;
 
+    public GameObject gameOverUi = default;
     public TMPro.TMP_Text scoreText;
     public TMPro.TMP_Text lifeText;
     public TMPro.TMP_Text goldText;
@@ -32,8 +33,19 @@ public class GameManager : MonoBehaviour
         }
 
         score = 0;
+        scoreText.text = string.Format("Score : {0}", score);
         life = 10;
-        gold = 100;
+        lifeText.text = string.Format("Life : {0}", life);
+        gold = 200;
+        goldText.text = string.Format("Gold : {0}", gold);
+    }
+
+    private void Update()
+    {
+        if(life == 0)
+        {
+            gameOverUi.SetActive(true);
+        }
     }
 
     public void AddEnemyInEnemies(GameObject enemy_)
